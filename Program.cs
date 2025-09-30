@@ -44,17 +44,23 @@ do
         mario.Name = Console.ReadLine();
         Console.WriteLine("Enter Description:");
         mario.Description = Console.ReadLine();
-            // Input Alias
+        // Input Alias
         List<string> list = [];
-        do {
-        Console.WriteLine($"Enter Alias or (enter) to quit:");
-        string response = Console.ReadLine()!;
-        if (string.IsNullOrEmpty(response)){
-            break;
-        }
-        list.Add(response);
+        do
+        {
+            Console.WriteLine($"Enter Alias or (enter) to quit:");
+            string response = Console.ReadLine()!;
+            if (string.IsNullOrEmpty(response))
+            {
+                break;
+            }
+            list.Add(response);
         } while (true);
         mario.Alias = list;
+        // Add Character
+        marios.Add(mario);
+        File.WriteAllText(marioFileName, JsonSerializer.Serialize(marios));
+        logger.Info($"Character added: {mario.Name}");
     }
     else if (choice == "3")
     {
