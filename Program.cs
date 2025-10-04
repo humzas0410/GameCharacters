@@ -102,6 +102,52 @@ do
             logger.Error("Invalid Id");
         }
     }
+    else if (choice == "4")
+    {
+        // Display Donkey Kong Characters
+        foreach (var c in donkeyKongs)
+        {
+            Console.WriteLine(c.Display());
+        }
+    }
+    else if (choice == "5")
+    {
+        // Add Donkey Kong Character
+        // Generate unique Id
+        DonkeyKong donkeyKong = new()
+        {
+            Id = donkeyKongs.Count == 0 ? 1 : donkeyKongs.Max(c => c.Id) + 1
+        };
+        InputCharacter(donkeyKong);
+        // Add Character
+        donkeyKongs.Add(donkeyKong);
+        File.WriteAllText(dkFileName, JsonSerializer.Serialize(donkeyKongs));
+        logger.Info($"Character added: {donkeyKong.Name}");
+    }
+    else if (choice == "6")
+    {
+        // Remove Donkey Kong Character
+        Console.WriteLine("Enter the Id of the character to remove:");
+        if (UInt32.TryParse(Console.ReadLine(), out UInt32 Id))
+        {
+            DonkeyKong? character = donkeyKongs.FirstOrDefault(c => c.Id == Id);
+            if (character == null)
+            {
+                logger.Error($"Character Id {Id} not found");
+            }
+            else
+            {
+                donkeyKongs.Remove(character);
+                // serialize list<donkeyKong> into json file
+                File.WriteAllText(dkFileName, JsonSerializer.Serialize(donkeyKongs));
+                logger.Info($"Character Id {Id} removed");
+            }
+        }
+        else
+        {
+            logger.Error("Invalid Id");
+        }
+    }
     else if (string.IsNullOrEmpty(choice))
     {
         break;
