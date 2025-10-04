@@ -18,6 +18,26 @@ if (File.Exists(marioFileName))
   logger.Info($"File deserialized {marioFileName}");
 }
 
+// deserialize donkey kong json from file into List<DonkeyKong>
+string dkFileName = "dk.json";
+List<DonkeyKong> donkeyKongs = [];
+// check if file exists
+if (File.Exists(dkFileName))
+{
+  donkeyKongs = JsonSerializer.Deserialize<List<DonkeyKong>>(File.ReadAllText(dkFileName))!;
+  logger.Info($"File deserialized {dkFileName}");
+}
+
+// deserialize street fighter json from file into List<StreetFighter>
+string sf2FileName = "sf2.json";
+List<StreetFighter> streetFighters = [];
+// check if file exists
+if (File.Exists(sf2FileName))
+{
+  streetFighters = JsonSerializer.Deserialize<List<StreetFighter>>(File.ReadAllText(sf2FileName))!;
+  logger.Info($"File deserialized {sf2FileName}");
+}
+
 do
 {
   // display choices to user
