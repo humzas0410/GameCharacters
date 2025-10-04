@@ -148,6 +148,52 @@ do
             logger.Error("Invalid Id");
         }
     }
+    else if (choice == "7")
+    {
+        // Display Street Fighter Characters
+        foreach (var c in streetFighters)
+        {
+            Console.WriteLine(c.Display());
+        }
+    }
+    else if (choice == "8")
+    {
+        // Add Street Fighter Character
+        // Generate unique Id
+        StreetFighter streetFighter = new()
+        {
+            Id = streetFighters.Count == 0 ? 1 : streetFighters.Max(c => c.Id) + 1
+        };
+        InputCharacter(streetFighter);
+        // Add Character
+        streetFighters.Add(streetFighter);
+        File.WriteAllText(sf2FileName, JsonSerializer.Serialize(streetFighters));
+        logger.Info($"Character added: {streetFighter.Name}");
+    }
+    else if (choice == "9")
+    {
+        // Remove Street Fighter Character
+        Console.WriteLine("Enter the Id of the character to remove:");
+        if (UInt32.TryParse(Console.ReadLine(), out UInt32 Id))
+        {
+            StreetFighter? character = streetFighters.FirstOrDefault(c => c.Id == Id);
+            if (character == null)
+            {
+                logger.Error($"Character Id {Id} not found");
+            }
+            else
+            {
+                streetFighters.Remove(character);
+                // serialize list<streetFighter> into json file
+                File.WriteAllText(sf2FileName, JsonSerializer.Serialize(streetFighters));
+                logger.Info($"Character Id {Id} removed");
+            }
+        }
+        else
+        {
+            logger.Error("Invalid Id");
+        }
+    }
     else if (string.IsNullOrEmpty(choice))
     {
         break;
