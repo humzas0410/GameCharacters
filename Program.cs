@@ -107,13 +107,36 @@ do
     }
     else if (choice == "4")
     {
+        // Edit Mario Character
+        Console.WriteLine("Enter the Id of the character to edit:");
+        if (UInt32.TryParse(Console.ReadLine(), out UInt32 Id))
+        {
+            int idx = marios.FindIndex(c => c.Id == Id);
+            if (idx == -1)
+            {
+                logger.Error($"Character Id {Id} not found");
+            }
+            else
+            {
+                InputCharacter(marios[idx]);
+                File.WriteAllText(marioFileName, JsonSerializer.Serialize(marios));
+                logger.Info($"Character Id {Id} edited");
+            }
+        }
+        else
+        {
+            logger.Error("Invalid Id");
+        }
+    }
+    else if (choice == "5")
+    {
         // Display Donkey Kong Characters
         foreach (var c in donkeyKongs)
         {
             Console.WriteLine(c.Display());
         }
     }
-    else if (choice == "5")
+    else if (choice == "6")
     {
         // Add Donkey Kong Character
         // Generate unique Id
@@ -127,7 +150,7 @@ do
         File.WriteAllText(dkFileName, JsonSerializer.Serialize(donkeyKongs));
         logger.Info($"Character added: {donkeyKong.Name}");
     }
-    else if (choice == "6")
+    else if (choice == "7")
     {
         // Remove Donkey Kong Character
         Console.WriteLine("Enter the Id of the character to remove:");
@@ -151,7 +174,7 @@ do
             logger.Error("Invalid Id");
         }
     }
-    else if (choice == "7")
+    else if (choice == "9")
     {
         // Display Street Fighter Characters
         foreach (var c in streetFighters)
@@ -159,7 +182,7 @@ do
             Console.WriteLine(c.Display());
         }
     }
-    else if (choice == "8")
+    else if (choice == "10")
     {
         // Add Street Fighter Character
         // Generate unique Id
@@ -173,7 +196,7 @@ do
         File.WriteAllText(sf2FileName, JsonSerializer.Serialize(streetFighters));
         logger.Info($"Character added: {streetFighter.Name}");
     }
-    else if (choice == "9")
+    else if (choice == "11")
     {
         // Remove Street Fighter Character
         Console.WriteLine("Enter the Id of the character to remove:");
