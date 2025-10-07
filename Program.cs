@@ -174,6 +174,29 @@ do
             logger.Error("Invalid Id");
         }
     }
+    else if (choice == "8")
+    {
+        // Edit Donkey Kong Character
+        Console.WriteLine("Enter the Id of the character to edit:");
+        if (UInt32.TryParse(Console.ReadLine(), out UInt32 Id))
+        {
+            int idx = donkeyKongs.FindIndex(c => c.Id == Id);
+            if (idx == -1)
+            {
+                logger.Error($"Character Id {Id} not found");
+            }
+            else
+            {
+                InputCharacter(donkeyKongs[idx]);
+                File.WriteAllText(dkFileName, JsonSerializer.Serialize(donkeyKongs));
+                logger.Info($"Character Id {Id} edited");
+            }
+        }
+        else
+        {
+            logger.Error("Invalid Id");
+        }
+    }
     else if (choice == "9")
     {
         // Display Street Fighter Characters
