@@ -243,6 +243,29 @@ do
             logger.Error("Invalid Id");
         }
     }
+    else if (choice == "12")
+    {
+        // Edit Street Fighter Character
+        Console.WriteLine("Enter the Id of the character to edit:");
+        if (UInt32.TryParse(Console.ReadLine(), out UInt32 Id))
+        {
+            int idx = streetFighters.FindIndex(c => c.Id == Id);
+            if (idx == -1)
+            {
+                logger.Error($"Character Id {Id} not found");
+            }
+            else
+            {
+                InputCharacter(streetFighters[idx]);
+                File.WriteAllText(sf2FileName, JsonSerializer.Serialize(streetFighters));
+                logger.Info($"Character Id {Id} edited");
+            }
+        }
+        else
+        {
+            logger.Error("Invalid Id");
+        }
+    }
     else if (string.IsNullOrEmpty(choice))
     {
         break;
